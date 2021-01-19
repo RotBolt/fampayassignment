@@ -1,0 +1,3 @@
+include ':famCardContainer'
+include ':app'
+rootProject.name = "FamPayAssignment"
