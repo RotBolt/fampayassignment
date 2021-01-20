@@ -7,7 +7,7 @@ data class CardGroup(
     val name:String,
 
     @SerializedName("design_type")
-    val designTypes:DesignType,
+    val designType:DesignType,
 
     @SerializedName("cards")
     val cards:List<Card>,

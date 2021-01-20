@@ -2,7 +2,9 @@ package io.rotlabs.famcardcontainer.ui
 
 import io.reactivex.disposables.CompositeDisposable
 import io.rotlabs.famcardcontainer.data.remote.RestClient
-import io.rotlabs.famcardcontainer.utils.SchedulerProvider
+import io.rotlabs.famcardcontainer.utils.OnErrorResponse
+import io.rotlabs.famcardcontainer.utils.OnSuccessResponse
+import io.rotlabs.famcardcontainer.utils.rx.SchedulerProvider
 
 class ContainerViewModel(
     private val onSuccessResponse: OnSuccessResponse,

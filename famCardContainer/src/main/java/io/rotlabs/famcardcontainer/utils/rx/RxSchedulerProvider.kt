@@ -1,4 +1,4 @@
-package io.rotlabs.famcardcontainer.utils
+package io.rotlabs.famcardcontainer.utils.rx
 
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers

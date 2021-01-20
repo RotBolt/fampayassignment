@@ -4,11 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 data class CardImage(
     @SerializedName("image_type")
-    val imageType:String,
+    val imageType: String,
 
     @SerializedName("asset_type")
-    val assetType:String? = null,
+    val assetType: String? = null,
 
     @SerializedName("image_url")
-    val imageUrl:String? = null
+    val imageUrl: String? = null,
+
+    @SerializedName("aspect_ratio")
+    val aspectRatio: Double = 1.0
 )

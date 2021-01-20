@@ -1,20 +1,19 @@
 package io.rotlabs.famcardcontainer.ui
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.disposables.CompositeDisposable
+import io.rotlabs.famcardcontainer.data.model.CardGroup
 import io.rotlabs.famcardcontainer.data.remote.response.CardGroupResponse
-import io.rotlabs.famcardcontainer.utils.RxSchedulerProvider
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import io.rotlabs.famcardcontainer.ui.cardgroups.CardGroupAdapter
+import io.rotlabs.famcardcontainer.utils.OnErrorResponse
+import io.rotlabs.famcardcontainer.utils.OnSuccessResponse
+import io.rotlabs.famcardcontainer.utils.rx.RxSchedulerProvider
+import kotlinx.android.synthetic.main.layout_card_groups.view.*
 
 class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
     constructor(context: Context) : super(context) {
@@ -45,14 +44,32 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
     private lateinit var containerViewModel: ContainerViewModel
     private lateinit var compositeDisposable: CompositeDisposable
 
+    private lateinit var cardGroupAdapter: CardGroupAdapter
+
     private fun init() {
         compositeDisposable = CompositeDisposable()
+
         containerViewModel = ContainerViewModel(
             this,
             this,
             compositeDisposable,
             RxSchedulerProvider()
         )
+
+        cardGroupAdapter = CardGroupAdapter(arrayListOf())
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        setupCardGroupRecyclerView(cardGroupAdapter, layoutManager)
+
+
+    }
+
+    private fun setupCardGroupRecyclerView(
+        cardGroupAdapter: CardGroupAdapter,
+        layoutManager: LinearLayoutManager
+    ) {
+        addView(rvCardGroups)
+        rvCardGroups.layoutManager = layoutManager
+        rvCardGroups.adapter = cardGroupAdapter
     }
 
     fun load(url: String) {
@@ -62,6 +79,10 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
     override fun onSuccess(cardGroupResponse: CardGroupResponse) {
         // pass data to adapter
         Log.d("PUI", "Response size ${cardGroupResponse.cardGroups.size}")
+        val cardGroupList = arrayListOf<CardGroup>()
+        cardGroupList.addAll(cardGroupResponse.cardGroups)
+        cardGroupAdapter.updateAllItems(cardGroupList)
+
     }
 
     override fun onError(errorMessage: String?) {
