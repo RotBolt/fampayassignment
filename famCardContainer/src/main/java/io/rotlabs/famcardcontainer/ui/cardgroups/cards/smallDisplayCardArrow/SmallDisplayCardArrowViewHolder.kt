@@ -3,6 +3,7 @@ package io.rotlabs.famcardcontainer.ui.cardgroups.cards.smallDisplayCardArrow
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.view.marginEnd
 import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
@@ -42,8 +43,8 @@ class SmallDisplayCardArrowViewHolder(parent: ViewGroup) :
         CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient, 8)
 
         data.bgImage?.let { bgImage ->
-            CardDisplayUtils.setViewToAspectRatio(itemView, bgImage.aspectRatio)
-            CardDisplayUtils.setBackgroundImage(itemView, bgImage, 8)
+            CardDisplayUtils.setViewToAspectRatio(itemView, bgImage.aspectRatio, itemView.marginEnd)
+            CardDisplayUtils.setBackgroundImage(itemView, bgImage, 8, itemView.marginEnd)
         }
     }
 }

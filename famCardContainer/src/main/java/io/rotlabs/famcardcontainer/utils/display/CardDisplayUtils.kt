@@ -4,10 +4,12 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.view.marginEnd
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -54,12 +56,25 @@ object CardDisplayUtils {
     fun setBackgroundImage(
         view: View,
         cardImage: CardImage?,
-        roundCornerRadius: Int = 0
+        roundCornerRadius: Int = 0,
+        margin: Int = 0,
+        isHC9: Boolean = false,
+        hc9height: Int? = null
     ) {
         cardImage?.let { bgImage ->
             val requestOptions = RequestOptions().apply {
                 diskCacheStrategy(DiskCacheStrategy.ALL)
                 transform(RoundedCorners(roundCornerRadius.dp))
+
+                if (!isHC9) {
+                    val size = getSize(bgImage.aspectRatio, margin)
+                    override(size.first, size.second)
+                } else {
+                    hc9height?.let { height ->
+                        val size = getSizeHC9(bgImage.aspectRatio, height)
+                        override(size.first, size.second)
+                    }
+                }
             }
 
             Glide.with(view)
@@ -149,22 +164,35 @@ object CardDisplayUtils {
     }
 
 
-    fun setViewToAspectRatio(view: View, aspectRatio: Double) {
+    fun setViewToAspectRatio(view: View, aspectRatio: Double, margin: Int = 0) {
         val params = view.layoutParams
-
-        val safeAR = if (aspectRatio <= 0.0) 1.0 else aspectRatio
-        params.width = ScreenUtils.getScreenWidth()
-        params.height = (params.width / safeAR).toInt()
+        params.width = ScreenUtils.getScreenWidth() - (4 * margin)
+        params.height = (params.width / aspectRatio.toSafeAspectRatio()).toInt()
 
         view.layoutParams = params
     }
 
     fun setViewToAspectRatioHC9(view: View, aspectRatio: Double, height: Int) {
         val params = view.layoutParams
-        params.height = height
-        val width = (height * aspectRatio).toInt()
+        params.height = height.dp
+        val width = (height.dp * aspectRatio.toSafeAspectRatio()).toInt()
         params.width = width
         view.layoutParams = params
+    }
+
+    private fun getSize(aspectRatio: Double, margin: Int): Pair<Int, Int> {
+        val width = ScreenUtils.getScreenWidth() - (4 * margin)
+        val height = (width / aspectRatio.toSafeAspectRatio()).toInt()
+        return width to height
+    }
+
+    private fun getSizeHC9(aspectRatio: Double, height: Int): Pair<Int, Int> {
+        val width = (height.dp * aspectRatio.toSafeAspectRatio()).toInt()
+        return width to height
+    }
+
+    private fun Double.toSafeAspectRatio(): Double {
+        return if (this <= 0.0) 1.0 else this
     }
 
 }

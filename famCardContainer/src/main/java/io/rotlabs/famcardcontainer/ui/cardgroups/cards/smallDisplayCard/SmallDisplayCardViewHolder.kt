@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.core.view.marginEnd
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -57,8 +58,8 @@ class SmallDisplayCardViewHolder(parent: ViewGroup) :
         CardDisplayUtils.setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
         CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient, 8)
         data.bgImage?.let { bgImage ->
-            CardDisplayUtils.setViewToAspectRatio(itemView, bgImage.aspectRatio)
-            CardDisplayUtils.setBackgroundImage(itemView, bgImage, 8)
+            CardDisplayUtils.setViewToAspectRatio(itemView, bgImage.aspectRatio, itemView.marginEnd)
+            CardDisplayUtils.setBackgroundImage(itemView, bgImage, 8, itemView.marginEnd)
         }
     }
 

@@ -2,6 +2,7 @@ package io.rotlabs.famcardcontainer.ui.cardgroups.cards.imageCard
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginEnd
 import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
@@ -21,8 +22,8 @@ class ImageCardViewHolder(parent: ViewGroup) :
             setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
             setBackgroundGradient(itemView, data.bgGradient, 8)
             data.bgImage?.let { bgImage ->
-                setViewToAspectRatio(itemView, bgImage.aspectRatio)
-                setBackgroundImage(itemView, bgImage, 8)
+                setViewToAspectRatio(itemView, bgImage.aspectRatio, itemView.marginEnd)
+                setBackgroundImage(itemView, bgImage, 8, itemView.marginEnd)
             }
         }
     }

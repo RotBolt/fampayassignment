@@ -16,4 +16,20 @@
         <item name="android:padding">8dp</item>
         <item name="android:layout_margin">4dp</item>
     </style>
+
+
+    <style name="BigDisplayTitle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="BigDisplayDescription">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
 </resources>
