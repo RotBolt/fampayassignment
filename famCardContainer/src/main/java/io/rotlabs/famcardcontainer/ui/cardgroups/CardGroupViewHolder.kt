@@ -56,7 +56,15 @@ class CardGroupViewHolder(parent: ViewGroup) :
                 view.rvCardsHolder.adapter = BigDisplayCardAdapter(cardsList)
             }
             DesignType.DYNAMIC_WIDTH_CARD -> {
-                view.rvCardsHolder.adapter = DynamicWidthDisplayCardAdapter(cardsList)
+                data.height?.let { cardHeight ->
+                    val cardHeightPairedList = cardsList.map {
+                        cardHeight to it
+                    }
+                    val arrayList = arrayListOf<Pair<Int, Card>>()
+                    arrayList.addAll(cardHeightPairedList)
+
+                    view.rvCardsHolder.adapter = DynamicWidthDisplayCardAdapter(arrayList)
+                }
             }
         }
     }

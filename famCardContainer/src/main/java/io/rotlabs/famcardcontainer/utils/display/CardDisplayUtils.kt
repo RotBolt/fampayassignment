@@ -62,15 +62,6 @@ object CardDisplayUtils {
                 transform(RoundedCorners(roundCornerRadius.dp))
             }
 
-
-            val aspectRatio = if (cardImage.aspectRatio <= 0.0) 1.0 else cardImage.aspectRatio
-            val params = view.layoutParams
-            params.width = ScreenUtils.getScreenWidth()
-            params.height = (params.width / aspectRatio).toInt()
-
-
-            view.layoutParams = params
-
             Glide.with(view)
                 .asBitmap()
                 .apply(requestOptions)
@@ -155,6 +146,25 @@ object CardDisplayUtils {
                 UrlOpener.openUrl(urlString, it.context)
             }
         }
+    }
+
+
+    fun setViewToAspectRatio(view: View, aspectRatio: Double) {
+        val params = view.layoutParams
+
+        val safeAR = if (aspectRatio <= 0.0) 1.0 else aspectRatio
+        params.width = ScreenUtils.getScreenWidth()
+        params.height = (params.width / safeAR).toInt()
+
+        view.layoutParams = params
+    }
+
+    fun setViewToAspectRatioHC9(view: View, aspectRatio: Double, height: Int) {
+        val params = view.layoutParams
+        params.height = height
+        val width = (height * aspectRatio).toInt()
+        params.width = width
+        view.layoutParams = params
     }
 
 }

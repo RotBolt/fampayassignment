@@ -54,9 +54,12 @@ class SmallDisplayCardViewHolder(parent: ViewGroup) :
 
         CardDisplayUtils.setUrlAction(itemView, data.url)
 
-        CardDisplayUtils.setBackgroundColor(itemView, data.bgColor?: WHITE_HEX)
-        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient,8)
-        CardDisplayUtils.setBackgroundImage(itemView, data.bgImage,8)
+        CardDisplayUtils.setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
+        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient, 8)
+        data.bgImage?.let { bgImage ->
+            CardDisplayUtils.setViewToAspectRatio(itemView, bgImage.aspectRatio)
+            CardDisplayUtils.setBackgroundImage(itemView, bgImage, 8)
+        }
     }
 
 

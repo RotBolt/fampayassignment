@@ -20,7 +20,10 @@ class ImageCardViewHolder(parent: ViewGroup) :
             setUrlAction(itemView, data.url)
             setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
             setBackgroundGradient(itemView, data.bgGradient, 8)
-            setBackgroundImage(itemView.ivCardImage, data.bgImage, 8)
+            data.bgImage?.let { bgImage ->
+                setViewToAspectRatio(itemView, bgImage.aspectRatio)
+                setBackgroundImage(itemView, bgImage, 8)
+            }
         }
     }
 }
