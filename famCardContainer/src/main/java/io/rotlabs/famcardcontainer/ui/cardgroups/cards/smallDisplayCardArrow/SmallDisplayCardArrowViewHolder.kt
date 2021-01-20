@@ -7,7 +7,8 @@ import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
-import kotlinx.android.synthetic.main.item_small_display_card.view.*
+import io.rotlabs.famcardcontainer.utils.display.WHITE_HEX
+import kotlinx.android.synthetic.main.item_small_display_card_arrow.view.*
 
 class SmallDisplayCardArrowViewHolder(parent: ViewGroup) :
     BaseViewHolder<Card>(parent, R.layout.item_small_display_card_arrow) {
@@ -37,8 +38,8 @@ class SmallDisplayCardArrowViewHolder(parent: ViewGroup) :
 
         CardDisplayUtils.setUrlAction(itemView, data.url)
 
-        CardDisplayUtils.setBackgroundColor(itemView, data.bgColor)
-        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient)
-        CardDisplayUtils.setBackgroundImage(itemView, data.bgImage,8)
+        CardDisplayUtils.setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
+        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient, 8)
+        CardDisplayUtils.setBackgroundImage(itemView, data.bgImage, 8)
     }
 }

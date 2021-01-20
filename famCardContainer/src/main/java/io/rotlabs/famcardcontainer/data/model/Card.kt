@@ -29,7 +29,7 @@ data class Card(
     val bgImage:CardImage? = null,
 
     @SerializedName(value = "bg_color")
-    val bgColor:String?= null,
+    val bgColor:String? = null,
 
     @SerializedName(value = "bg_gradient")
     val bgGradient: Gradient? = null,

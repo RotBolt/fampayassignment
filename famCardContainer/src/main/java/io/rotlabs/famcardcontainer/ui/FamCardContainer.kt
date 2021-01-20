@@ -3,10 +3,13 @@ package io.rotlabs.famcardcontainer.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.disposables.CompositeDisposable
+import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.CardGroup
 import io.rotlabs.famcardcontainer.data.remote.response.CardGroupResponse
 import io.rotlabs.famcardcontainer.ui.cardgroups.CardGroupAdapter
@@ -67,7 +70,10 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
         cardGroupAdapter: CardGroupAdapter,
         layoutManager: LinearLayoutManager
     ) {
-        addView(rvCardGroups)
+
+        val rvCardGroupLayout =
+            LayoutInflater.from(context).inflate(R.layout.layout_card_groups, this, false)
+        addView(rvCardGroupLayout)
         rvCardGroups.layoutManager = layoutManager
         rvCardGroups.adapter = cardGroupAdapter
     }

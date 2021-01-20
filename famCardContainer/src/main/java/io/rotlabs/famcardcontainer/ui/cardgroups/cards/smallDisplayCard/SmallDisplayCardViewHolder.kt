@@ -21,6 +21,7 @@ import io.rotlabs.famcardcontainer.data.model.FormattedText
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.UrlOpener
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
+import io.rotlabs.famcardcontainer.utils.display.WHITE_HEX
 import io.rotlabs.famcardcontainer.utils.text.TextUtils
 import kotlinx.android.synthetic.main.item_small_display_card.view.*
 
@@ -53,8 +54,8 @@ class SmallDisplayCardViewHolder(parent: ViewGroup) :
 
         CardDisplayUtils.setUrlAction(itemView, data.url)
 
-        CardDisplayUtils.setBackgroundColor(itemView, data.bgColor)
-        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient)
+        CardDisplayUtils.setBackgroundColor(itemView, data.bgColor?: WHITE_HEX)
+        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient,8)
         CardDisplayUtils.setBackgroundImage(itemView, data.bgImage,8)
     }
 

@@ -6,6 +6,7 @@ import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
+import io.rotlabs.famcardcontainer.utils.display.WHITE_HEX
 import kotlinx.android.synthetic.main.item_image_card.view.*
 
 class ImageCardViewHolder(parent: ViewGroup) :
@@ -17,8 +18,8 @@ class ImageCardViewHolder(parent: ViewGroup) :
     override fun bind(data: Card) {
         with(CardDisplayUtils) {
             setUrlAction(itemView, data.url)
-            setBackgroundColor(itemView, data.bgColor)
-            setBackgroundGradient(itemView, data.bgGradient)
+            setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
+            setBackgroundGradient(itemView, data.bgGradient, 8)
             setBackgroundImage(itemView.ivCardImage, data.bgImage, 8)
         }
     }

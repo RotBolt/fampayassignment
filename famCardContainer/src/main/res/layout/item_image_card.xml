@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
+    android:layout_margin="8dp"
     app:cardElevation="8dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivCardImage"
+        android:background="@android:color/darker_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

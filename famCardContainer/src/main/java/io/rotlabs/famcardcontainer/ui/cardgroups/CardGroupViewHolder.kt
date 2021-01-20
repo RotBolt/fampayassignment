@@ -2,6 +2,8 @@ package io.rotlabs.famcardcontainer.ui.cardgroups
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.Card
@@ -13,7 +15,6 @@ import io.rotlabs.famcardcontainer.ui.cardgroups.cards.dynamicWidthCard.DynamicW
 import io.rotlabs.famcardcontainer.ui.cardgroups.cards.imageCard.ImageCardAdapter
 import io.rotlabs.famcardcontainer.ui.cardgroups.cards.smallDisplayCard.SmallDisplayCardAdapter
 import io.rotlabs.famcardcontainer.ui.cardgroups.cards.smallDisplayCardArrow.SmallDisplayCardArrowAdapter
-import io.rotlabs.famcardcontainer.ui.cardgroups.cards.smallDisplayCardArrow.SmallDisplayCardArrowViewHolder
 import kotlinx.android.synthetic.main.item_cards_list.view.*
 
 
@@ -26,21 +27,21 @@ class CardGroupViewHolder(parent: ViewGroup) :
     }
 
     override fun bind(data: CardGroup) {
-        if (data.isScrollable) {
-            bindScrollableList(data, itemView)
-        } else {
-            bindNonScrollableList(data, itemView)
-        }
+        bindList(data, itemView, data.isScrollable)
     }
 
-    private fun bindScrollableList(data: CardGroup, view: View) {
+    private fun bindList(data: CardGroup, view: View, isScrollable: Boolean) {
 
+        itemView.rvCardsHolder.isVisible = true
         val cardsList = arrayListOf<Card>()
         cardsList.addAll(data.cards)
 
-        view.rvCardsHolder.layoutManager =
-            LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
-
+        if (isScrollable) {
+            view.rvCardsHolder.layoutManager =
+                LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+        } else {
+            view.rvCardsHolder.layoutManager = GridLayoutManager(view.context, cardsList.size)
+        }
         when (data.designType) {
             DesignType.SMALL_DISPLAY_CARD -> {
                 view.rvCardsHolder.adapter = SmallDisplayCardAdapter(cardsList)
@@ -58,10 +59,6 @@ class CardGroupViewHolder(parent: ViewGroup) :
                 view.rvCardsHolder.adapter = DynamicWidthDisplayCardAdapter(cardsList)
             }
         }
-    }
-
-    private fun bindNonScrollableList(data: CardGroup, view: View) {
-
     }
 
 

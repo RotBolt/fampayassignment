@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp">
 
@@ -14,9 +15,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivIcon"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/tvDescription"
             app:layout_constraintEnd_toStartOf="@id/barrier"
@@ -43,6 +43,8 @@
             style="@style/SmallDisplayTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrier"
             app:layout_constraintTop_toTopOf="parent"
