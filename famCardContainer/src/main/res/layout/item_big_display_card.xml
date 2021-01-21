@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/measure_8_dp"
     app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="8dp">
+    app:cardCornerRadius="@dimen/measure_16_dp"
+    app:cardElevation="@dimen/measure_8_dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             style="@style/BigDisplayActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/measure_16_dp"
+            android:layout_margin="@dimen/measure_8_dp"
             android:drawableTop="@drawable/ic_notification"
             android:text="@string/remind_later_label"
             app:layout_constraintBottom_toTopOf="@id/btnDismiss"
@@ -32,7 +32,7 @@
             style="@style/BigDisplayActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/measure_16_dp"
+            android:layout_margin="@dimen/measure_8_dp"
             android:drawableTop="@drawable/ic_cancel"
             android:text="@string/dismiss_label"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,9 +43,9 @@
             android:id="@+id/bigCardContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            tools:visibility="gone">
+            app:cardCornerRadius="@dimen/measure_8_dp"
+            app:cardElevation="@dimen/measure_8_dp"
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -63,7 +63,6 @@
                     style="@style/BigDisplayTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +75,8 @@
                     style="@style/BigDisplayDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="@dimen/measure_16_dp"
+                    app:layout_constraintBottom_toTopOf="@id/ctaHolder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvBigTitle"
@@ -86,7 +86,8 @@
                     android:id="@+id/ctaHolder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:paddingBottom="24dp"
+                    android:layout_marginStart="12dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

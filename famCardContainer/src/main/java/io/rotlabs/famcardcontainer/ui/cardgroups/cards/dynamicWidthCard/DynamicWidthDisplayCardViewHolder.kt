@@ -7,6 +7,7 @@ import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
 import io.rotlabs.famcardcontainer.utils.WHITE_HEX
+import io.rotlabs.famcardcontainer.utils.display.ScreenUtils
 import kotlinx.android.synthetic.main.item_dynamic_width_card.view.*
 
 class DynamicWidthDisplayCardViewHolder(parent: ViewGroup) :
@@ -23,10 +24,14 @@ class DynamicWidthDisplayCardViewHolder(parent: ViewGroup) :
 
             data.second.bgImage?.let { bgImage ->
                 setViewToAspectRatioHC9(itemView, bgImage.aspectRatio, data.first)
+
+                val roundedCorners =
+                    ScreenUtils.getDimension(R.dimen.measure_8_dp, itemView.context).toInt()
+
                 setBackgroundImage(
                     view = itemView.ivBgImage,
                     cardImage = bgImage,
-                    roundCornerRadius = 8,
+                    roundCornerRadius = roundedCorners,
                     isHC9 = true,
                     hc9height = data.first
                 )

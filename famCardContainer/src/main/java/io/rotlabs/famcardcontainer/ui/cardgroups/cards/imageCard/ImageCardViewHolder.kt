@@ -8,8 +8,12 @@ import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
 import io.rotlabs.famcardcontainer.utils.WHITE_HEX
+import io.rotlabs.famcardcontainer.utils.display.ScreenUtils
 
-class ImageCardViewHolder(parent: ViewGroup) :
+class ImageCardViewHolder(
+    parent: ViewGroup,
+    private val spanCount: Int
+) :
     BaseViewHolder<Card>(parent, R.layout.item_image_card) {
     override fun setupView(view: View) {
 
@@ -19,10 +23,20 @@ class ImageCardViewHolder(parent: ViewGroup) :
         with(CardDisplayUtils) {
             setUrlAction(itemView, data.url)
             setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
-            setBackgroundGradient(itemView, data.bgGradient, 8)
+
+            val roundedCorners =
+                ScreenUtils.getDimension(R.dimen.measure_8_dp, itemView.context)
+
+            setBackgroundGradient(itemView, data.bgGradient, roundedCorners)
             data.bgImage?.let { bgImage ->
-                setViewToAspectRatio(itemView, bgImage.aspectRatio, itemView.marginEnd)
-                setBackgroundImage(itemView, bgImage, 8, itemView.marginEnd)
+                setViewToAspectRatio(itemView, bgImage.aspectRatio, itemView.marginEnd, spanCount)
+                setBackgroundImage(
+                    itemView,
+                    bgImage,
+                    roundedCorners.toInt(),
+                    itemView.marginEnd,
+                    spanCount = spanCount
+                )
             }
         }
     }

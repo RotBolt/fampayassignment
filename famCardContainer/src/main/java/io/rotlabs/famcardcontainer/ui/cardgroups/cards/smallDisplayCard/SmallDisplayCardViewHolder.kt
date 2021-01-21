@@ -9,9 +9,13 @@ import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
 import io.rotlabs.famcardcontainer.utils.WHITE_HEX
+import io.rotlabs.famcardcontainer.utils.display.ScreenUtils
 import kotlinx.android.synthetic.main.item_small_display_card.view.*
 
-class SmallDisplayCardViewHolder(parent: ViewGroup) :
+class SmallDisplayCardViewHolder(
+    parent: ViewGroup,
+    private val spanCount: Int
+) :
     BaseViewHolder<Card>(parent, R.layout.item_small_display_card) {
 
     companion object {
@@ -41,11 +45,19 @@ class SmallDisplayCardViewHolder(parent: ViewGroup) :
         CardDisplayUtils.setUrlAction(itemView, data.url)
 
         CardDisplayUtils.setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
-        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient, 8)
-        data.bgImage?.let { bgImage ->
-            CardDisplayUtils.setViewToAspectRatio(itemView, bgImage.aspectRatio, itemView.marginEnd)
-            CardDisplayUtils.setBackgroundImage(itemView, bgImage, 8, itemView.marginEnd)
-        }
+
+        val roundedCorners =
+            ScreenUtils.getDimension(R.dimen.measure_8_dp, itemView.context)
+
+        CardDisplayUtils.setBackgroundGradient(itemView, data.bgGradient, roundedCorners)
+
+        CardDisplayUtils.setBackgroundImage(
+            itemView,
+            data.bgImage,
+            roundedCorners.toInt(),
+            itemView.marginEnd,
+            spanCount = spanCount
+        )
     }
 
 

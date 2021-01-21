@@ -7,7 +7,8 @@ import io.rotlabs.famcardcontainer.ui.base.BaseAdapter
 
 class BigDisplayCardAdapter(
     private val dataList: ArrayList<Card>,
-    private val removedCardsDetailsHolder: RemovedCardsDetailsHolder
+    private val removedCardsDetailsHolder: RemovedCardsDetailsHolder,
+    private val spanCount: Int
 ) :
     BaseAdapter<Card, BigDisplayCardViewHolder>(dataList) {
 
@@ -29,7 +30,7 @@ class BigDisplayCardAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BigDisplayCardViewHolder {
-        return BigDisplayCardViewHolder(parent, actionButtonClickListener)
+        return BigDisplayCardViewHolder(parent, actionButtonClickListener, spanCount)
     }
 
 }

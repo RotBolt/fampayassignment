@@ -46,15 +46,18 @@ class CardGroupViewHolder(
         } else {
             view.rvCardsHolder.layoutManager = GridLayoutManager(view.context, cardsList.size)
         }
+
+        val spanCount = if (isScrollable || cardsList.isEmpty()) 1 else cardsList.size
+
         when (data.designType) {
             DesignType.SMALL_DISPLAY_CARD -> {
-                view.rvCardsHolder.adapter = SmallDisplayCardAdapter(cardsList)
+                view.rvCardsHolder.adapter = SmallDisplayCardAdapter(cardsList, spanCount)
             }
             DesignType.SMALL_CARD_WITH_ARROW -> {
-                view.rvCardsHolder.adapter = SmallDisplayCardArrowAdapter(cardsList)
+                view.rvCardsHolder.adapter = SmallDisplayCardArrowAdapter(cardsList, spanCount)
             }
             DesignType.IMAGE_CARD -> {
-                view.rvCardsHolder.adapter = ImageCardAdapter(cardsList)
+                view.rvCardsHolder.adapter = ImageCardAdapter(cardsList, spanCount)
             }
             DesignType.BIG_DISPLAY_CARD -> {
 
@@ -67,8 +70,16 @@ class CardGroupViewHolder(
                 val toShowCardsList = arrayListOf<Card>()
                 toShowCardsList.addAll(filteredCardList)
 
+                val hc3spanCount =
+                    if (isScrollable || toShowCardsList.isEmpty()) 1 else toShowCardsList.size
+
+                if (!isScrollable) {
+                    view.rvCardsHolder.layoutManager =
+                        GridLayoutManager(view.context, toShowCardsList.size)
+                }
+
                 view.rvCardsHolder.adapter =
-                    BigDisplayCardAdapter(toShowCardsList, removedCardsDetailsHolder)
+                    BigDisplayCardAdapter(toShowCardsList, removedCardsDetailsHolder, hc3spanCount)
             }
             DesignType.DYNAMIC_WIDTH_CARD -> {
                 data.height?.let { cardHeight ->

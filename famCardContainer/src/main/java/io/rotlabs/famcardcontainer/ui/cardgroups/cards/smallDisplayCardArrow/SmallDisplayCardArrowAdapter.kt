@@ -5,13 +5,16 @@ import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseAdapter
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 
-class SmallDisplayCardArrowAdapter(private val dataList: ArrayList<Card>) :
+class SmallDisplayCardArrowAdapter(
+    private val dataList: ArrayList<Card>,
+    private val spanCount: Int
+) :
     BaseAdapter<Card, SmallDisplayCardArrowViewHolder>(dataList) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): SmallDisplayCardArrowViewHolder {
-        return SmallDisplayCardArrowViewHolder(parent)
+        return SmallDisplayCardArrowViewHolder(parent, spanCount)
     }
 
 

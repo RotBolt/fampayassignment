@@ -2,4 +2,5 @@
 <resources>
     <dimen name="measure_8_dp">8dp</dimen>
     <dimen name="measure_16_dp">16dp</dimen>
+    <dimen name="small_card_icon_width">50dp</dimen>
 </resources>

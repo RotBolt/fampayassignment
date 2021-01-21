@@ -6,10 +6,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -27,7 +28,7 @@ import io.rotlabs.famcardcontainer.utils.text.TextUtils
 
 object CardDisplayUtils {
 
-    fun setBackgroundGradient(view: View, gradient: Gradient?, cornerRadius: Int = 0) {
+    fun setBackgroundGradient(view: View, gradient: Gradient?, cornerRadius: Float = 0.0f) {
         gradient?.let {
             val colorIntArray = gradient.colors.map {
                 Color.parseColor(it)
@@ -35,7 +36,7 @@ object CardDisplayUtils {
             val gradientDrawable =
                 GradientDrawable(GradientDrawable.Orientation.BL_TR, colorIntArray)
 
-            gradientDrawable.setCornerRadius(cornerRadius.dp.toFloat())
+            gradientDrawable.setCornerRadius(cornerRadius)
 
 
             view.background = gradientDrawable
@@ -59,15 +60,16 @@ object CardDisplayUtils {
         roundCornerRadius: Int = 0,
         margin: Int = 0,
         isHC9: Boolean = false,
-        hc9height: Int? = null
+        hc9height: Int? = null,
+        spanCount: Int = 1
     ) {
         cardImage?.let { bgImage ->
             val requestOptions = RequestOptions().apply {
                 diskCacheStrategy(DiskCacheStrategy.ALL)
-                transform(RoundedCorners(roundCornerRadius.dp))
+                transform(RoundedCorners(roundCornerRadius))
 
                 if (!isHC9) {
-                    val size = getSize(bgImage.aspectRatio, margin)
+                    val size = getSize(bgImage.aspectRatio, margin, spanCount)
                     override(size.first, size.second)
                 } else {
                     hc9height?.let { height ->
@@ -136,11 +138,6 @@ object CardDisplayUtils {
                 }
 
 
-                val aspectRatio = if (cardImage.aspectRatio <= 0.0) 1.0 else cardImage.aspectRatio
-                val params = view.layoutParams
-                params.height = (params.width / aspectRatio).toInt()
-                view.layoutParams = params
-
                 Glide.with(view)
                     .asBitmap()
                     .load(cardImage.imageUrl)
@@ -164,9 +161,9 @@ object CardDisplayUtils {
     }
 
 
-    fun setViewToAspectRatio(view: View, aspectRatio: Double, margin: Int = 0) {
+    fun setViewToAspectRatio(view: View, aspectRatio: Double, margin: Int = 0, spanCount: Int = 1) {
         val params = view.layoutParams
-        params.width = ScreenUtils.getScreenWidth() - (4 * margin)
+        params.width = (ScreenUtils.getScreenWidth() - (4 * margin)) / spanCount
         params.height = (params.width / aspectRatio.toSafeAspectRatio()).toInt()
 
         view.layoutParams = params
@@ -180,10 +177,10 @@ object CardDisplayUtils {
         view.layoutParams = params
     }
 
-    private fun getSize(aspectRatio: Double, margin: Int): Pair<Int, Int> {
+    private fun getSize(aspectRatio: Double, margin: Int, spanCount: Int): Pair<Int, Int> {
         val width = ScreenUtils.getScreenWidth() - (4 * margin)
         val height = (width / aspectRatio.toSafeAspectRatio()).toInt()
-        return width to height
+        return width / spanCount to height
     }
 
     private fun getSizeHC9(aspectRatio: Double, height: Int): Pair<Int, Int> {
@@ -193,6 +190,30 @@ object CardDisplayUtils {
 
     private fun Double.toSafeAspectRatio(): Double {
         return if (this <= 0.0) 1.0 else this
+    }
+
+
+    fun resizeView(view: View, scaleFactor: Float) {
+        val params = view.layoutParams
+        if (params is ViewGroup.MarginLayoutParams) {
+            params.marginStart = (params.marginStart * scaleFactor).toInt()
+            params.marginEnd = (params.marginEnd * scaleFactor).toInt()
+            params.bottomMargin = (params.topMargin * scaleFactor).toInt()
+            params.topMargin = (params.bottomMargin * scaleFactor).toInt()
+        }
+
+        if (params != null) {
+            view.layoutParams = params
+        }
+
+        view.setPadding(
+            (view.paddingStart * scaleFactor).toInt(),
+            (view.paddingEnd * scaleFactor).toInt(),
+            (view.paddingTop * scaleFactor).toInt(),
+            (view.paddingBottom * scaleFactor).toInt(),
+        )
+        view.scaleX = scaleFactor
+        view.scaleY = scaleFactor
     }
 
 }
