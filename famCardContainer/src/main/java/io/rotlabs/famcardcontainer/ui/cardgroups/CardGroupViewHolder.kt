@@ -75,7 +75,7 @@ class CardGroupViewHolder(
 
                 if (!isScrollable) {
                     view.rvCardsHolder.layoutManager =
-                        GridLayoutManager(view.context, toShowCardsList.size)
+                        GridLayoutManager(view.context, hc3spanCount)
                 }
 
                 view.rvCardsHolder.adapter =
