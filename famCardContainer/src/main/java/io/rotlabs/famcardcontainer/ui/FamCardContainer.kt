@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.disposables.CompositeDisposable
@@ -51,6 +52,8 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
 
     private lateinit var cardGroupAdapter: CardGroupAdapter
 
+    private var lastFetchedUrl: String? = null
+
     private fun init() {
         compositeDisposable = CompositeDisposable()
 
@@ -61,37 +64,62 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
             RxSchedulerProvider()
         )
 
+        addContainerLayout()
+        setupSwipeToRefresh()
         val removedCardsDetailsHolder = RemovedCardsDetailsHolder(context.getAppSharedPrefs())
         cardGroupAdapter = CardGroupAdapter(arrayListOf(), removedCardsDetailsHolder)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         setupCardGroupRecyclerView(cardGroupAdapter, layoutManager)
 
+    }
 
+    private fun addContainerLayout() {
+        val containerLayout =
+            LayoutInflater.from(context).inflate(R.layout.layout_card_groups, this, false)
+        addView(containerLayout)
     }
 
     private fun setupCardGroupRecyclerView(
         cardGroupAdapter: CardGroupAdapter,
         layoutManager: LinearLayoutManager
     ) {
-
-        val rvCardGroupLayout =
-            LayoutInflater.from(context).inflate(R.layout.layout_card_groups, this, false)
-        addView(rvCardGroupLayout)
         rvCardGroups.layoutManager = layoutManager
         rvCardGroups.adapter = cardGroupAdapter
+        rvCardGroups.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                swipeToRefresh.isEnabled =
+                    layoutManager.findFirstCompletelyVisibleItemPosition() == 0
+            }
+        })
+    }
+
+
+    private fun setupSwipeToRefresh() {
+        swipeToRefresh.setOnRefreshListener {
+            lastFetchedUrl?.let { url ->
+                load(url)
+            }
+            swipeToRefresh.isRefreshing = false
+        }
     }
 
     fun load(url: String) {
+        loader.isVisible = true
+        rvCardGroups.isVisible = false
+        lastFetchedUrl = url
         containerViewModel.loadCardGroupResponse(url)
     }
+
 
     override fun onSuccess(cardGroupResponse: CardGroupResponse) {
         // pass data to adapter
         Log.d("PUI", "Response size ${cardGroupResponse.cardGroups.size}")
+        loader.isVisible = false
+        rvCardGroups.isVisible = true
         val cardGroupList = arrayListOf<CardGroup>()
         cardGroupList.addAll(cardGroupResponse.cardGroups)
         cardGroupAdapter.updateAllItems(cardGroupList)
-
     }
 
     override fun onError(errorMessage: String?) {
