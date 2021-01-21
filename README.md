@@ -36,6 +36,7 @@
 - [X] On long press of Big Display Card (HC3), it should slide to the right and display action buttons 
     - [X] On tapping "remind later" action on a card, it should be removed from the display. This card should be shown on the next app start.
     - [X] On tapping "dismiss now" action, it should be removed from the display. This card should never be visible again.
+    - [X] When in Right Slide position, tap/click once to make the `Big_Card (HC3)` slide back to original position
 - [X] Implement is_scrollable - if this property is true, then the card group is shown as a horizontal scroll view. If this property is false, then all cards are accommodated into the screen width itself with equal width for each card.
 
  

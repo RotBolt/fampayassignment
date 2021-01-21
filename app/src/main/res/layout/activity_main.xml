@@ -8,7 +8,7 @@
 
     <io.rotlabs.famcardcontainer.ui.FamCardContainer
         android:id="@+id/famContainer"
-        android:background="@color/colorYellow"
+        android:background="@color/colorGray"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

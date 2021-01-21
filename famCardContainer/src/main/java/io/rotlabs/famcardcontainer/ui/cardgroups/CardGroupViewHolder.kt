@@ -19,7 +19,7 @@ import io.rotlabs.famcardcontainer.ui.cardgroups.cards.smallDisplayCardArrow.Sma
 import kotlinx.android.synthetic.main.item_cards_list.view.*
 
 
-// contains cards list of differnt design types
+// contains cards list of different design types
 class CardGroupViewHolder(
     parent: ViewGroup,
     private val removedCardsDetailsHolder: RemovedCardsDetailsHolder

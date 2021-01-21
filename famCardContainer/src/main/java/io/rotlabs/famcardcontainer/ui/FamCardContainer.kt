@@ -85,6 +85,8 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
     ) {
         rvCardGroups.layoutManager = layoutManager
         rvCardGroups.adapter = cardGroupAdapter
+
+        // To make swipe to refresh available at top of list only
         rvCardGroups.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -113,8 +115,6 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
 
 
     override fun onSuccess(cardGroupResponse: CardGroupResponse) {
-        // pass data to adapter
-        Log.d("PUI", "Response size ${cardGroupResponse.cardGroups.size}")
         loader.isVisible = false
         rvCardGroups.isVisible = true
         val cardGroupList = arrayListOf<CardGroup>()

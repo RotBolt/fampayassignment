@@ -18,6 +18,8 @@ class DynamicWidthDisplayCardViewHolder(parent: ViewGroup) :
 
     override fun bind(data: Pair<Int, Card>) {
         with(CardDisplayUtils) {
+            // aspect ratio comes with bg_image only so setting aspect_ratio = 1.0
+            // if gradient is there and no bg_image is there
             setViewToAspectRatioHC9(itemView, 1.0, data.first)
             setBackgroundColor(itemView, data.second.bgColor ?: WHITE_HEX)
             setBackgroundGradient(itemView, data.second.bgGradient)
