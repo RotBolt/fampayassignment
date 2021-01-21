@@ -34,12 +34,24 @@ object CardDisplayUtils {
                 Color.parseColor(it)
             }.toIntArray()
             val gradientDrawable =
-                GradientDrawable(GradientDrawable.Orientation.BL_TR, colorIntArray)
+                GradientDrawable(getOrientation(it.angle), colorIntArray)
 
             gradientDrawable.setCornerRadius(cornerRadius)
 
-
             view.background = gradientDrawable
+        }
+    }
+
+    private fun getOrientation(angle: Int): GradientDrawable.Orientation {
+        return when (angle) {
+            45 -> GradientDrawable.Orientation.TR_BL
+            90 -> GradientDrawable.Orientation.RIGHT_LEFT
+            135 -> GradientDrawable.Orientation.BR_TL
+            180 -> GradientDrawable.Orientation.BOTTOM_TOP
+            225 -> GradientDrawable.Orientation.BL_TR
+            270 -> GradientDrawable.Orientation.LEFT_RIGHT
+            315 -> GradientDrawable.Orientation.TL_BR
+            else -> GradientDrawable.Orientation.TOP_BOTTOM
         }
     }
 
