@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.rotlabs.famcardcontainer.R
+import io.rotlabs.famcardcontainer.data.local.RemovedCardsDetailsHolder
 import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.data.model.CardGroup
 import io.rotlabs.famcardcontainer.data.model.DesignType
@@ -19,7 +20,10 @@ import kotlinx.android.synthetic.main.item_cards_list.view.*
 
 
 // contains cards list of differnt design types
-class CardGroupViewHolder(parent: ViewGroup) :
+class CardGroupViewHolder(
+    parent: ViewGroup,
+    private val removedCardsDetailsHolder: RemovedCardsDetailsHolder
+) :
     BaseViewHolder<CardGroup>(parent, R.layout.item_cards_list) {
 
     override fun setupView(view: View) {
@@ -53,7 +57,18 @@ class CardGroupViewHolder(parent: ViewGroup) :
                 view.rvCardsHolder.adapter = ImageCardAdapter(cardsList)
             }
             DesignType.BIG_DISPLAY_CARD -> {
-                view.rvCardsHolder.adapter = BigDisplayCardAdapter(cardsList)
+
+                val removedCardList = removedCardsDetailsHolder.getRemovedCardsList()
+
+                val filteredCardList = cardsList.filter {
+                    !removedCardList.contains(it.name)
+                }
+
+                val toShowCardsList = arrayListOf<Card>()
+                toShowCardsList.addAll(filteredCardList)
+
+                view.rvCardsHolder.adapter =
+                    BigDisplayCardAdapter(toShowCardsList, removedCardsDetailsHolder)
             }
             DesignType.DYNAMIC_WIDTH_CARD -> {
                 data.height?.let { cardHeight ->

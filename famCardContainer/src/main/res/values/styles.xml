@@ -32,4 +32,13 @@
         <item name="android:padding">8dp</item>
         <item name="android:layout_margin">4dp</item>
     </style>
+
+    <style name="BigDisplayActionButton">
+        <item name="android:background">@drawable/round_bg</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:padding">@dimen/measure_16_dp</item>
+    </style>
 </resources>

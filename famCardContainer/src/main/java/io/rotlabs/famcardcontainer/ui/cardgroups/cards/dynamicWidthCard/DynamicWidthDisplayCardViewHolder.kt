@@ -6,7 +6,7 @@ import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
-import io.rotlabs.famcardcontainer.utils.display.WHITE_HEX
+import io.rotlabs.famcardcontainer.utils.WHITE_HEX
 import kotlinx.android.synthetic.main.item_dynamic_width_card.view.*
 
 class DynamicWidthDisplayCardViewHolder(parent: ViewGroup) :

@@ -1,29 +1,14 @@
 package io.rotlabs.famcardcontainer.ui.cardgroups.cards.smallDisplayCard
 
-import android.graphics.Bitmap
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.view.marginEnd
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.Card
-import io.rotlabs.famcardcontainer.data.model.CardImage
-import io.rotlabs.famcardcontainer.data.model.FormattedText
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
-import io.rotlabs.famcardcontainer.utils.UrlOpener
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
-import io.rotlabs.famcardcontainer.utils.display.WHITE_HEX
-import io.rotlabs.famcardcontainer.utils.text.TextUtils
+import io.rotlabs.famcardcontainer.utils.WHITE_HEX
 import kotlinx.android.synthetic.main.item_small_display_card.view.*
 
 class SmallDisplayCardViewHolder(parent: ViewGroup) :

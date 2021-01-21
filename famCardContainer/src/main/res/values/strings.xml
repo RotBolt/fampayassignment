@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remind_later_label">Remind later</string>
+    <string name="dismiss_label">Dismiss now</string>
+</resources>

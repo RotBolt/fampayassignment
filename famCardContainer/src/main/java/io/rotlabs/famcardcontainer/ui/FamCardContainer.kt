@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.disposables.CompositeDisposable
 import io.rotlabs.famcardcontainer.R
+import io.rotlabs.famcardcontainer.data.local.RemovedCardsDetailsHolder
 import io.rotlabs.famcardcontainer.data.model.CardGroup
 import io.rotlabs.famcardcontainer.data.remote.response.CardGroupResponse
 import io.rotlabs.famcardcontainer.ui.cardgroups.CardGroupAdapter
 import io.rotlabs.famcardcontainer.utils.OnErrorResponse
 import io.rotlabs.famcardcontainer.utils.OnSuccessResponse
+import io.rotlabs.famcardcontainer.utils.getAppSharedPrefs
 import io.rotlabs.famcardcontainer.utils.rx.RxSchedulerProvider
 import kotlinx.android.synthetic.main.layout_card_groups.view.*
 
@@ -59,7 +61,8 @@ class FamCardContainer : FrameLayout, OnSuccessResponse, OnErrorResponse {
             RxSchedulerProvider()
         )
 
-        cardGroupAdapter = CardGroupAdapter(arrayListOf())
+        val removedCardsDetailsHolder = RemovedCardsDetailsHolder(context.getAppSharedPrefs())
+        cardGroupAdapter = CardGroupAdapter(arrayListOf(), removedCardsDetailsHolder)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         setupCardGroupRecyclerView(cardGroupAdapter, layoutManager)
 

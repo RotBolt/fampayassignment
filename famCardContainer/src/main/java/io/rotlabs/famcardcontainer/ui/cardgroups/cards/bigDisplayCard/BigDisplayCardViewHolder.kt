@@ -1,11 +1,13 @@
 package io.rotlabs.famcardcontainer.ui.cardgroups.cards.bigDisplayCard
 
+import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
 import com.google.android.material.button.MaterialButton
 import io.rotlabs.famcardcontainer.R
 import io.rotlabs.famcardcontainer.data.model.CallToAction
@@ -13,13 +15,25 @@ import io.rotlabs.famcardcontainer.data.model.Card
 import io.rotlabs.famcardcontainer.ui.base.BaseViewHolder
 import io.rotlabs.famcardcontainer.utils.UrlOpener
 import io.rotlabs.famcardcontainer.utils.display.CardDisplayUtils
-import io.rotlabs.famcardcontainer.utils.display.WHITE_HEX
+import io.rotlabs.famcardcontainer.utils.WHITE_HEX
 import kotlinx.android.synthetic.main.item_big_display_card.view.*
 
-class BigDisplayCardViewHolder(parent: ViewGroup) :
+class BigDisplayCardViewHolder(
+    parent: ViewGroup,
+    private val actionButtonClickListener: OnActionButtonClickListener
+) :
     BaseViewHolder<Card>(parent, R.layout.item_big_display_card) {
     override fun setupView(view: View) {
 
+        itemView.btnRemindLater.setOnClickListener {
+            actionButtonClickListener.onRemindLaterClick(adapterPosition)
+        }
+
+        itemView.btnDismiss.setOnClickListener {
+            actionButtonClickListener.onDismissClick(adapterPosition)
+        }
+
+        setupSlideOnCard(view)
     }
 
     override fun bind(data: Card) {
@@ -31,14 +45,14 @@ class BigDisplayCardViewHolder(parent: ViewGroup) :
             } else {
                 itemView.tvDescription.isVisible = false
             }
-            setUrlAction(itemView, data.url)
+            setUrlAction(itemView.bigCardContainer, data.url)
 
-            setBackgroundColor(itemView, data.bgColor ?: WHITE_HEX)
-            setBackgroundGradient(itemView, data.bgGradient)
+            setBackgroundColor(itemView.bigCardContainer, data.bgColor ?: WHITE_HEX)
+            setBackgroundGradient(itemView.bigCardContainer, data.bgGradient)
 
             data.bgImage?.let { bgImage ->
                 setViewToAspectRatio(itemView, bgImage.aspectRatio, itemView.marginEnd)
-                setBackgroundImage(itemView, bgImage, 8, itemView.marginEnd)
+                setBackgroundImage(itemView.bigCardContainer, bgImage, 8, itemView.marginEnd)
             }
 
             data.cta.forEach { cta ->
@@ -76,5 +90,24 @@ class BigDisplayCardViewHolder(parent: ViewGroup) :
 
         view.ctaHolder.addView(ctaButton)
 
+    }
+
+    private fun getSlidePosition(): Float {
+        return itemView.btnRemindLater.x + itemView.btnRemindLater.width + itemView.btnRemindLater.marginStart
+    }
+
+
+    private fun setupSlideOnCard(view: View) {
+        var slide = true
+        view.bigCardContainer.setOnLongClickListener {
+            val position = getSlidePosition()
+            val value = if (slide) position else 0f
+            ObjectAnimator.ofFloat(view.bigCardContainer, "translationX", value).apply {
+                duration = 500
+                start()
+            }
+            slide = !slide
+            true
+        }
     }
 }
